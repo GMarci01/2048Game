@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 Leírás</title>
+    <link rel="icon" type="image/x-icon" href="../Web/SRC/KepekVideok/Kepek/favicon.ico">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../Web/SRC/CSS/2048_CSS_main.css">
+     
+</head>
+<body>
+    <!--Header:-->
+    <header>
+        <h1>A 2048 játék leírása</h1>
+    </header>
+    <!---->
+
+
+    <!--Menü:-->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand ms-1" href="../Web/index.html">2048</a>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item ms-3">
+          <a class="nav-link active" aria-current="page" href="../Web/Aloldalak/letoltes.html">Letöltés</a>
+        </li>
+        <li class="nav-item ms-3">
+          <a class="nav-link active" aria-current="page" href="../Web/Aloldalak/fejlesztok.html">Fejlesztők</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!---->
+
+<!--Játék:-->
+<div id="jatekide"></div>
+<p>Ide lesz a játék becsatolva, ha kész lesz hozzá a JS.</p>
+<!---->
+
+<button onclick="ido()">Játék indítása</button>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-3">
+            <p>A 2048 egy logikai és stratégiát igénylő játék, amely egy 4x4-es rácson, számokkal (melyek kettő hatványai 2-től egészen 2048-ig) működik. A játékmenet kezdetén a program létrehoz két darab kettes számot, melyeket elhelyezi a rácsban véletlenszerű pozícióval. A játékos a számokat a rácsban csúsztatással mozgathatja a WASD gombok segítségével balra-jobbra, illetve fel-le. Minden mozdulat esetén újabb darab kettes szám jelenik meg a rácsban, véletlenszerű pozícióval.</p>
+            <p>A játék célja, hogy a felhasználó a számok folytonos csúsztatásával azokat egybeolvassza. Ha ez megtörténik a játékos mindig az összeadott számok mennyiségéét kapja meg pont formájában. Amikor a számok egybeolvadnak a második szám helyzetén megjelenik a két szám összege (például, ha két darab kettes elhelyezkedik egymás alatt, és a játékos lefelé csúsztatja a számokat a kettesekből egy darab négyes lesz). A játék ezen folyamaton át addig tart, ameddig a játékos el nem éri a 2048-as számot. Amennyiben a rács megtelik számokkal, amelyeket a felhasználó nem tud összeolvasztani, a játék véget ér, a felhasználó elveszítette a játékot. </p>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+</div>
+
+</body>
+<footer>
+    <script src="../Web/SRC/JS/2048_JS_main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-5"></div>
+        <div class="col-sm-2">
+          <a onclick="sotetmod()"><img src="..\Web\SRC\KepekVideok\Kepek\darkmodeicon.png" class="footer_mod_kep" alt="sotetmod"></a>
+          <img src="..\Web\SRC\KepekVideok\Kepek\lightmodeicon.png" class="footer_mod_kep" alt="vilagosmod" onclick="vilagosmod()">
+        </div>
+        <div class="col-sm-5"></div>
+      </div>
+    </div>
+    <p>Készítette: Görbe István Márton, Kecskeméti Erik, Vogel Máté.</p>
+</footer>
+</html>

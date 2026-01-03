@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048</title>
+    <link rel="icon" type="image/x-icon" href="../Web/SRC/KepekVideok/Kepek/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="../Web/SRC/JS/2048_JS_main.js"></script>
+    <link rel="stylesheet" href="../Web/SRC/CSS/2048_CSS_main.css">
+     
+</head>
+<body>
+   
+    <!--Menü:-->
+        <nav class="menu navbar navbar-expand-lg">
+  <div class="container">
+    <a class="kiemelt navbar-brand ms-4 text-white" href="../Web/index.html">2048</a>
+    
+    <div class="jobbra">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav align-items-end">
+       
+        <li class="nav-item ms-3">
+          <a class="nav-link text-white" aria-current="page" href="../Web/Aloldalak/leiras.html">Leírás</a>
+        </li>
+        <li class="nav-item ms-3">
+          <a class="nav-link text-white" aria-current="page" href="../Web/Aloldalak/fejlesztok.html">Fejlesztők</a>
+        </li>
+         <li class="nav-item ms-3">
+          <a class="nav-link text-white" aria-current="page" href="../Web/Aloldalak/dokumentacio.html">Dokumentáció</a>
+        </li>
+        <li class="nav-item ms-3">
+          <a class="nav-link letoltes text-white" aria-current="page" href="../Web/Aloldalak/letoltes.html">Letöltés</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  </div>
+</nav>
+<!---->
+<div class="container">
+<div class="row">
+  <div class="col-sm-6">
+    <div class="foszoveg">
+  <h2>A 2048 játék <br>
+     a Windows CMD felületén <br class="vonal"></h2>
+     <hr class="vonal">
+<p>A 2025-26 I. féléves projektmunka megvalósitásával</p></div>
+</div>
+<div class="col-sm-6">
+    <video class="bemutatovideo" loop src="../Web/SRC/KepekVideok/Kepek/teszt.mp4"></video>
+  </div>
+
+</div>
+</div>
+
+<footer>
+    
+   <a onclick="sotetmod()"><img src="..\Web\SRC\KepekVideok\Kepek\darkmodeicon.png" class="footer_mod_kep" alt="sotetmod"></a>
+   <img src="..\Web\SRC\KepekVideok\Kepek\lightmodeicon.png" class="footer_mod_kep" alt="vilagosmod" onclick="vilagosmod()">
+        
+    <p class="authors">Készítette: Görbe István Márton, Kecskeméti Erik, Vogel Máté.</p>
+</footer>
+</body>
+</html>

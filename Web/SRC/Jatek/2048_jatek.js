@@ -1,0 +1,1 @@
+//2048 játék teljes kódja:

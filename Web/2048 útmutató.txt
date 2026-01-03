@@ -1,0 +1,4 @@
+2048 útmutató:
+
+A 2048 egy olyan gondolkodást szükségelő és elősegítő logikai játék, amely egy alap 4X4-es rácsban valósul meg. Minden egyes kocka folyamatosan mozog amikor a játékos az iránynak megfelelő gombot lenyomja, amely lehet lefelé (s), felfelé (w), jobbra (d) vagy balra(a). Amikor két azonos értékű csempe ütközik, azok értékei összeadódnak. Az értékek 2 hatványait képviselik, 2-től 2048-ig. A mozgás miatt a játéktér folyamatosan változik. A játék fő célja, hogy a számok folyamatos összevonásával a játékos elérje a 2048-at. Amennyiben a játékos eléri a 2048 pontot, megnyerte a játákor. Ha a rácsban már sehova sem lehet lépni, a játékos veszített.
+
