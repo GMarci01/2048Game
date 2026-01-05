@@ -1,0 +1,1169 @@
+HIBANAPLÓ
+
+1.,
+
+ha nincs mit lefele mozgatni pl akkor nem azt csinálja ,hogy nem tudsz lefele mozogni hanem hogy enged lefele mozogni és csak lespawnol egy kettest
+
+[2][0][0][0]
+[0][0][0][0]
+[0][0][0][2]
+[0][4][2][4]
+Kérek egy inputot: 
+s
+[0][0][0][0]
+[0][0][0][2]
+[0][0][0][4]
+[2][4][2][2]
+Kérek egy inputot: 
+s
+[0][0][0][0]
+[0][2][0][2]
+[0][0][0][4]
+[2][4][2][2]
+Kérek egy inputot: 
+
+
+
+----------------------------------------------------------------------------------------------------
+
+
+
+AI prompt: 
+ne adj meg kód megoldást csak segíts hol lehet a probléma mert amikor 2 db 4-es össze mergelek akkor nem 8 lesz belőle hanem 2-es 
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
+
+public class feleviprojekt {
+    public static void main(String[] args) {
+        Random rnd = new Random();
+        Scanner sc = new Scanner(System.in);
+        int[] tomb = new int[11];
+        int[][] matrix = new int[4][4];
+        int score = 0;
+        int bestscore = 0;
+
+        int belerak = 1;
+
+        for (int i = 0; i < 11; i++) {
+            tomb[i] = belerak *= 2;
+        }
+
+        try {
+
+            BufferedReader br = new BufferedReader(new FileReader("data_2048.txt"));
+            String Line = "";
+            while ((Line = br.readLine()) != null) {
+                bestscore = Integer.valueOf(Line);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        //kezdés
+        int[] kezdox = new int[2];
+        int[] kezdoy = new int[2];
+
+        for (int i = 0; i < 2; i++) {
+            int kezdox1 = rnd.nextInt(4);
+            int kezdoy1 = rnd.nextInt(4);
+            matrix[kezdox1][kezdoy1] = 2;
+        }
+
+        System.out.println("Score: " + score + ", BestScore: " + bestscore);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                System.out.print("[" + matrix[i][j] + "]");
+            }
+            System.out.println();
+        }
+
+
+        ArrayList<Integer> uresx = new ArrayList<>();
+        ArrayList<Integer> uresy = new ArrayList<>();
+
+        boolean kilep = false;
+
+        while (!kilep){
+            System.out.println("Kérek egy inputot: ");
+            String input = sc.next();
+
+            if (input.equalsIgnoreCase("w")) {
+                moveUp(matrix);
+                kiir(matrix);
+            }
+            else if (input.equalsIgnoreCase("s")) {
+                moveDown(matrix);
+                kiir(matrix);
+            }
+            else if (input.equalsIgnoreCase("a")) {
+                moveLeft(matrix);
+                kiir(matrix);
+            }
+            else if (input.equalsIgnoreCase("d")) {
+                moveRight(matrix);
+                kiir(matrix);
+            }
+            else if (input.equalsIgnoreCase("kilep")){
+                kilep = true;
+            }
+        }
+
+
+
+
+        bestscore = 10;
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("data_2048.txt"));
+            bw.write(String.valueOf(bestscore));
+
+            bw.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+//mukodik
+    public static void moveUp(int[][] m) {
+
+        int matrixhosssz = m.length;
+
+        for (int oszlop = 0; oszlop < matrixhosssz; oszlop++) {
+
+            int[] ideiglenes = new int[matrixhosssz];
+            int sorindex = 0;
+
+            for (int sor = 0; sor < matrixhosssz; sor++) {
+                if (m[sor][oszlop] != 0) {
+                    ideiglenes[sorindex++] = m[sor][oszlop];
+                }
+            }
+
+            for (int i = 0; i < sorindex - 1; i++) {
+                if (ideiglenes[i] == ideiglenes[i + 1]) {
+                    ideiglenes[i] *= 2;
+                    ideiglenes[i + 1] = 0;
+                }
+            }
+
+            int[] ujoszlop = new int[matrixhosssz];
+            int oszlopindex = 0;
+
+            for (int i = 0; i < matrixhosssz; i++) {
+                if (ideiglenes[i] != 0) {
+                    ujoszlop[oszlopindex++] = ideiglenes[i];
+                }
+            }
+
+            for (int sor = 0; sor < matrixhosssz; sor++) {
+                m[sor][oszlop] = ujoszlop[sor];
+            }
+
+
+        }
+    }
+//mukodik
+    public static void moveDown(int[][] m) {
+
+        int matrixhosssz = m.length;
+
+        for (int oszlop = 0; oszlop < matrixhosssz; oszlop++) {
+
+            int[] ideiglenes = new int[matrixhosssz];
+            int sorindex = 0;
+
+            for (int sor = 0; sor < matrixhosssz; sor++) {
+                if (m[sor][oszlop] != 0) {
+                    ideiglenes[sorindex++] = m[sor][oszlop];
+                }
+            }
+
+            for (int i = 0; i < sorindex - 1; i++) {
+                if (ideiglenes[i] == ideiglenes[i + 1]) {
+                    ideiglenes[i] *= 2;
+                    ideiglenes[i + 1] = 0;
+                }
+            }
+
+            int[] ujoszlop = new int[matrixhosssz];
+            int oszlopindex = 3;
+
+            for (int i = 0; i < matrixhosssz; i++) {
+                if (ideiglenes[i] != 0) {
+                    ujoszlop[oszlopindex--] = ideiglenes[i];
+                }
+            }
+
+            for (int sor = 0; sor < matrixhosssz; sor++) {
+                m[sor][oszlop] = ujoszlop[sor];
+            }
+
+
+        }
+    }
+
+
+    public static void moveLeft(int[][] m) {
+
+        int matrixhosssz = m.length;
+
+        for (int sor = 0; sor < matrixhosssz; sor++) {
+
+            int[] ideiglenes = new int[matrixhosssz];
+            int oszlopindex = 0;
+
+            for (int oszlop = 0; oszlop < matrixhosssz; oszlop++) {
+                if (m[sor][oszlop] != 0) {
+                    ideiglenes[oszlopindex++] = m[sor][oszlop];
+                }
+            }
+
+            for (int i = 0; i < oszlopindex - 1; i++) {
+                if (ideiglenes[i] == ideiglenes[i + 1]) {
+                    ideiglenes[i] *= 2;
+                    ideiglenes[i + 1] = 0;
+                }
+            }
+
+            int[] ujoszlop = new int[matrixhosssz];
+            int sorindex = 0;
+
+            for (int i = 0; i < matrixhosssz; i++) {
+                if (ideiglenes[i] != 0) {
+                    ujoszlop[sorindex] = ideiglenes[i];
+                }
+            }
+
+            for (int oszlop = 0; oszlop < matrixhosssz; oszlop++) {
+                m[sor][oszlop] = ujoszlop[oszlop];
+            }
+
+
+        }
+    }
+    public static void moveRight(int[][] m){
+
+            int matrixhosssz = m.length;
+
+            for (int sor = 0; sor < matrixhosssz; sor++) {
+
+                int[] ideiglenes = new int[matrixhosssz];
+                int oszlopindex = 0;
+
+                for (int oszlop = 0; oszlop < matrixhosssz; oszlop++) {
+                    if (m[sor][oszlop] != 0) {
+                        ideiglenes[oszlopindex++] = m[sor][oszlop];
+                    }
+                }
+
+                for (int i = 0; i < oszlopindex - 1; i++) {
+                    if (ideiglenes[i] == ideiglenes[i + 1]) {
+                        ideiglenes[i] *= 2;
+                        ideiglenes[i + 1] = 0;
+                    }
+                }
+
+                int[] ujoszlop = new int[matrixhosssz];
+                int sorindex = 3;
+
+                for (int i = 0; i < matrixhosssz; i++) {
+                    if (ideiglenes[i] != 0) {
+                        ujoszlop[sorindex--] = ideiglenes[i];
+                    }
+                }
+
+                for (int oszlop = 0; oszlop < matrixhosssz; oszlop++) {
+                    m[sor][oszlop] = ujoszlop[oszlop];
+                }
+
+
+            }
+
+    }
+
+    public static void kiir(int[][] m) {
+        Random rnd = new Random();
+        boolean igen = false;
+        while (igen!=true) {
+            int kezdox1 = rnd.nextInt(4);
+            int kezdoy1 = rnd.nextInt(4);
+            if (m[kezdox1][kezdoy1]!=2){
+                m[kezdox1][kezdoy1] = 2;
+                igen = true;
+            }
+
+        }
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                System.out.print("[" + m[i][j] + "]");
+            }
+            System.out.println();
+        }
+
+    }
+} 
+
+A válasz:
+
+A hiba nem a 4 → 8 összevonásnál történik, hanem ott, ahol új 2-est akarsz berakni a kiir() metódusban.
+
+🔍 Hol a probléma?
+
+Itt:
+
+if (m[kezdox1][kezdoy1] != 2) {
+    m[kezdox1][kezdoy1] = 2;
+    igen = true;
+}
+
+
+Ez azt jelenti:
+
+Csak akkor teszel le új számot, ha a mező nem 2-es.
+
+Viszont ha a mező 0 vagy 4 vagy 8 stb., akkor is 2-est teszel rá, így felülírod az összevont 8-at is egy 2-essel (!)
+
+Ezért lesz:
+
+4 + 4 = 8
+
+de utána a kiir() véletlenül rátesz egy új 2-est épp arra a helyre → ezért látod 2-esnek.
+
+✔️ Mit kell javítani?
+
+Nem kérek kódot, de logikailag ezt kell helyretenni:
+
+Új számot csak üres (0) mezőre tegyél, ne bárhová ami nem 2-es.
+
+Most az a hibás feltétel, hogy:
+ha nem 2
+
+Neked azt kellene nézned, hogy:
+ha 0 (akkor szabad rárakni új számot)
+
+
+Második kérdés:
+
+az előző hibát kijavítottam viszont most amikor már nem kettes szám van a sarokba és mellette szeretnék kettő másik számot mergelni akkor pl a 8-as eltűnik és amit össze mergeltem 2db 2-es az a 4-es a 8-as helyére kerül illetve néha megcserélődik egy kettes a sarokban lévő számmal ami nagyobb mint kettes. Ne add meg a kód megoldást csak mutass rá hogy hol a hiba
+
+A válasz:
+
+
+A leírás alapján két külön hibaforrásod van, és mindkettő a mozgatási/merge logikából származik – nem a random 2-es lerakásból.
+
+Az általad leírt tünetek:
+
+egy már ott lévő nagyobb szám (pl. 8) eltűnik és valami kisebb kerül a helyére
+
+néha két szám helyet cserél indokolatlanul
+
+a merge után elemek "összecsúsznak" hibás sorrendben
+
+→ Ezek mind arra utalnak, hogy az egyik mozgatásfüggvényben rosszul másolod vissza a sor/oszlop értékeket, vagyis a compress → merge → compress lépésekben valami hibázik.
+
+🔍 A konkrét hibák helye
+❗1. MoveLeft-ben hiba:
+
+Ezt részletesen jelzed is:
+
+for (int i = 0; i < matrixhosssz; i++) {
+    if (ideiglenes[i] != 0) {
+        ujoszlop[sorindex] = ideiglenes[i];
+    }
+}
+
+
+Itt NEM növelsz indexet, tehát mindig csak az első helyre írsz vissza → emiatt tolódnak el a számok és ezért tűnnek el nagyobb értékek.
+
+Ez az egyik fő oka annak, hogy egy 8-as eltűnik és helyére új érték kerül.
+
+❗2. MoveRight-ben is ugyanez a hiba
+
+Pont ugyanaz a logikai hiba:
+
+for (int i = 0; i < matrixhosssz; i++) {
+    if (ideiglenes[i] != 0) {
+        ujoszlop[sorindex--] = ideiglenes[i];
+    }
+}
+
+
+Itt jó a csökkenő indexelés –
+DE előtte ugyanúgy össze-vissza keverednek az elemek, mert a ideiglenes tömböt úgy kezeled, mintha rendezett lenne, pedig merges után benne maradnak nullák középen is.
+
+Ez szintén okozhatja, hogy:
+
+a nagyobb szám eltűnik
+
+egy kisebb felülírja
+
+vagy sorrend felcserélődik
+
+❗3. MoveDown-ban a logika szintén hibás
+
+Látszólag ugyanaz a módszer, mint MoveUp, de:
+
+összehúzás előtt a tömb nem fordul meg
+
+így a merge "rossz irányba" fut le
+
+Ez azt eredményezi, hogy:
+
+ami lent volt, nem ott marad
+
+ahol egy nagyobb számnak állnia kellene, oda kerülhet egy kisebb
+
+❗4. Általános probléma: merge után nem tisztítod helyesen a tömböt
+
+A merge után így nézhet ki egy sor:
+
+[2, 2, 0, 4]
+
+
+Merge után:
+
+[4, 0, 0, 4]
+
+
+Ezután egy második compress kell, de a kódjaid közül többnél a második compress hibás, pl:
+
+nem növeled az indexet
+
+rossz irányba húzod össze
+
+a cikluslogika helytelen
+
+Ez okozza az össze-vissza ugrálást és eltűnő nagy számokat.
+
+🎯 Összegzés – Hol keresd a hibát?
+
+MoveLeft: ❗nem növeled a sorindex-et → az egyik legkomolyabb hiba
+
+MoveRight: ❗merge után hibás compress
+
+MoveDown: ❗rossz a merge iránya
+
+Általános: ❗merge → compress folyamat nem minden függvényben ugyanúgy van megírva
+
+
+
+
+//ezt a rész ami nem biztos hogy belekerül
+
+
+
+
+
+
+
+
+a merge részre megtudnád adni a helyes megold
+A ChatGPT ezt mondta:
+
+Igen — a helyes merge logika minden irány esetén ugyanaz, csak a bejárási irány változik.
+
+A 2048 játék helyes szabálya merge-re:
+
+✔️ MERGE helyes működése
+
+Először összetolunk (compress) → minden 0 eltűnik, minden szám balra kerül (vagy adott irányba).
+
+Ezután egyetlen egyszer megnézzük egymás melletti elemeket, és ha egyenlők:
+
+összevonjuk
+
+a következő elemet lenullázzuk
+
+Ismét compress, hogy eltüntessük az új 0-kat.
+
+❗Nagyon fontos szabály:
+
+Merge minden számmal csak egyszer történhet meg lépésenként.
+
+✔️ A TÖKÉLETES, HIBAMENTES MERGE LOGIKA
+
+(iránytól független, csak a bemenő tömb sorrendje számít)
+
+1) compress (számokat összehúzni → nullákat kihagyni)
+2) merge (ha egymás mellett két egyenlő, akkor összevonni)
+3) ismét compress
+
+🔍 A három lépés helyesen
+1. COMPRESS (összetolás)
+
+Ez mindig így néz ki:
+
+int[] temp = new int[n];
+int idx = 0;
+
+for (int i = 0; i < n; i++) {
+    if (row[i] != 0) {
+        temp[idx++] = row[i];
+    }
+}
+// temp most kompakt, nullák csak a végén vannak
+
+2. MERGE (összevonás helyesen)
+
+Ez a legfontosabb rész, és így kell kinéznie:
+
+for (int i = 0; i < n - 1; i++) {
+    if (temp[i] == temp[i + 1] && temp[i] != 0) {
+        temp[i] *= 2;     // összevonás
+        temp[i + 1] = 0;  // második elem törlése (nagyon fontos)
+        i++;              // lépjünk egyet előre → egy szám csak egyszer mergelődik
+    }
+}
+
+❗Itt szokott lenni a hibád:
+
+nem nullázod le temp[i+1]-et
+
+vagy NEM lépsz tovább i++ → emiatt duplán merge-lődik
+
+vagy rossz sorrendben nézed a számokat
+
+3. MÁSODIK COMPRESS
+
+(Ismét eltüntetjük a merge által keletkezett nullákat)
+
+int[] result = new int[n];
+int idx2 = 0;
+
+for (int i = 0; i < n; i++) {
+    if (temp[i] != 0) {
+        result[idx2++] = temp[i];
+    }
+}
+
+
+Ez a result megy vissza a sorba/oszlopba.
+
+🎯 Összegzés
+
+A helyes merge logika mindig ez:
+
+🔵 1. compress
+🔵 2. merge (ha egyenlők, összevon + NULLÁZ + i++)
+🔵 3. compress
+
+Ha ezt a három lépést minden mozgásfüggvényben ugyanúgy csinálod, akkor:
+
+nem tűnnek el nagy számok
+
+nem cserélődnek fel értékek
+
+nem kerül 4-es egy 8-as helyére
+
+nem ugrálnak össze-vissza az elemek
+
+📌 Ha kéred, megmondom pontosan, melyik jelenlegi metódusodban melyik sor sérti meg ezt a háromszakaszos logikát.
+
+Ezt mondtad:
+ezt hogy kellene belerakni a jelenlegi kódomba
+A ChatGPT ezt mondta:
+
+Rendben — végigmutatom pontosan, hogy a TE kódodban hová kell betenni, kódot azonban nem írok át teljesen, csak megmutatom hol a hibás rész és mit kell oda tenni.
+
+A TE kódodban minden mozgásfüggvény így néz ki:
+
+1️⃣ kiszeded a nem-nullákat → jó
+2️⃣ merge-elsz → hibás
+3️⃣ újratöltöd → hibás
+
+A merge-rész helyett pontosan EZT kell használnod:
+🔵 Hová kell berakni a helyes MERGE logikát?
+📌 1. moveLeft-ben → IDE:
+
+Most így néz ki a merge rész:
+
+for (int i = 0; i < oszlopindex - 1; i++) {
+    if (ideiglenes[i] == ideiglenes[i + 1]) {
+        ideiglenes[i] *= 2;
+        ideiglenes[i + 1] = 0;
+    }
+}
+
+
+👉 Ezt kell lecserélni a helyes merge logikára, vagyis:
+
+összevonás után i++
+
+balról jobbra menjen
+
+csak egyszer mergelődjön
+
+Pontosan ez a rész a hibás.
+
+📌 2. moveRight-ban → UGYANIDE
+
+Most így néz ki:
+
+for (int i = 0; i < oszlopindex - 1; i++) {
+    if (ideiglenes[i] == ideiglenes[i + 1]) {
+        ideiglenes[i] *= 2;
+        ideiglenes[i + 1] = 0;
+    }
+}
+
+
+❗ Itt ugyanaz a gond:
+
+nincs i++ merge után
+
+rossz irányban tömöríted
+
+a nullázás után nem lesz második compress
+
+👉 Ezt is a helyes merge logikára kell cserélni.
+
+📌 3. moveUp-ban → UGYANITT
+
+moveUp-ban a merge logika szintén hibás, bár kevésbé látványosan:
+
+for (int i = 0; i < sorindex - 1; i++) {
+    if (ideiglenes[i] == ideiglenes[i + 1]) {
+        ideiglenes[i] *= 2;
+        ideiglenes[i + 1] = 0;
+    }
+}
+
+
+→ ugyanúgy hiányzik a második compress, és a i++.
+
+📌 4. moveDown-ban → ISMÉT UGYANITT
+
+moveDown-ban is pontosan ez a rész hibás.
+
+🔥 A LÉNYEG:
+A TE KÓDODBAN PONT EZT A RÉSZT KELL JAVÍTANI MINDEN IRÁNYBAN:
+for (int i = 0; i < ...; i++) {
+    if (ideiglenes[i] == ideiglenes[i + 1]) {
+        ideiglenes[i] *= 2;
+        ideiglenes[i + 1] = 0;
+    }
+}
+
+
+→ ezt kell lecserélni a helyes merge logikára:
+
+✔️ három lépés:
+
+compress
+
+merge (nulláz + i++)
+
+compress újra
+
+👉 Miért ott a hiba?
+
+Mert most:
+
+merge után a nullákat nem húzod össze újra
+
+ezért a tömbben így marad: [4, 0, 2, 2]
+
+amikor visszamásolod a sorba/oszlopba → ÖSSZEKEVEREDIK
+
+és felülírja pl. a sarokban lévő 8-ast
+
+Ezért tűnik el a 8-as → mert a hibás "visszatöltés" rárak egy 0 utáni másik számot véletlen pozícióba.
+
+🎯 Ha szeretnéd, bemutatom egyetlen példán (moveLeft), hogyan nézne ki a korrekt 3 lépés a TE kódod struktúrájában — ezután a többit te is be tudod illeszteni.
+Ezt mondtad:
+igen
+A ChatGPT ezt mondta:
+
+Oké, nézzük konkrét példán a moveLeft-et, hogy lásd, hogyan kell a helyes merge logikát a TE kódodba illeszteni, a meglévő struktúrát megtartva. Nem adok kész kódot, csak mutatom a pontos helyet és a lépéseket.
+
+🔹 A te moveLeft-ben a hibás rész:
+for (int i = 0; i < oszlopindex - 1; i++) {
+    if (ideiglenes[i] == ideiglenes[i + 1]) {
+        ideiglenes[i] *= 2;
+        ideiglenes[i + 1] = 0;
+    }
+}
+
+
+Itt nincs második compress → ezért a merge után marad a köztes 0 → összevissza másolódik vissza a sorba.
+
+Nincs i++ → egy szám kétszer is összevonódhat lépésenként, ami tilos.
+
+🔹 Helyes logika a TE kódodban (szóban)
+
+1️⃣ Compress – először húzd össze a nem-nullákat balra, így egy ideiglenes tömbben:
+
+pl. [2, 0, 2, 4] → [2, 2, 4, 0]
+
+2️⃣ Merge – egymás mellett lévő azonos számokat összevonod, majd a következőt nullázod, és lépsz eggyel tovább:
+
+[2, 2, 4, 0] → [4, 0, 4, 0]
+
+az i++ biztosítja, hogy a 4 csak egyszer mergelődjön
+
+3️⃣ Második compress – újra húzd össze a nem-nullákat balra:
+
+[4, 0, 4, 0] → [4, 4, 0, 0]
+
+4️⃣ Visszamásolás – csak ezután másold vissza a sorba a matrixba.
+
+🔹 Hogyan illeszd be
+
+A mostani merge ciklusod helyére tedd ezt a három lépést:
+
+1. compress ideiglenes tömb
+2. merge + nulláz + i++
+3. compress újra
+
+
+Ezután a visszamásolás a sorba/oszlopba már mindig helyes lesz.
+
+Ha akarod, tudok készíteni egy vizuális ábrát arról, hogyan alakul egy sor [2,2,4,0] → [4,4,0,0] a három lépés során, hogy egyértelmű legyen, mi történik. Ez segít minden irányhoz átmásolni a logikát.
+
+Szeretnéd, hogy elkészítsem?
+
+Ezt mondtad:
+most légyszi kész kódot adj
+A ChatGPT ezt mondta:
+
+Rendben! Az alábbiakban a moveLeft függvényed teljesen javított változata látható a helyes merge logikával, megtartva a TE kódstruktúrádat. A többi irányhoz (moveRight, moveUp, moveDown) ugyanígy kell alkalmazni a három lépéses compress → merge → compress folyamatot.
+
+public static void moveLeft(int[][] m) {
+    int n = m.length;
+
+    for (int sor = 0; sor < n; sor++) {
+        int[] ideiglenes = new int[n];
+        int index = 0;
+
+        // 1. compress: nem-nullák összetolása balra
+        for (int oszlop = 0; oszlop < n; oszlop++) {
+            if (m[sor][oszlop] != 0) {
+                ideiglenes[index++] = m[sor][oszlop];
+            }
+        }
+
+        // 2. merge: egymás mellett lévő azonos számok összevonása
+        for (int i = 0; i < n - 1; i++) {
+            if (ideiglenes[i] != 0 && ideiglenes[i] == ideiglenes[i + 1]) {
+                ideiglenes[i] *= 2;
+                ideiglenes[i + 1] = 0;
+                i++; // egy szám csak egyszer merge-elődik
+            }
+        }
+
+        // 3. második compress: nullák eltüntetése
+        int[] ujSor = new int[n];
+        int ujIndex = 0;
+        for (int i = 0; i < n; i++) {
+            if (ideiglenes[i] != 0) {
+                ujSor[ujIndex++] = ideiglenes[i];
+            }
+        }
+
+        // visszamásolás a mátrixba
+        for (int oszlop = 0; oszlop < n; oszlop++) {
+            m[sor][oszlop] = ujSor[oszlop];
+        }
+    }
+}
+
+🔹 Magyarázat:
+
+Első compress: minden számot balra húzunk, a nullák a sor végére kerülnek.
+
+Merge: egymás mellett lévő azonos számokat összevonunk, a következő elem nullázódik, és i++ biztosítja, hogy ne mergeljen többször ugyanaz a szám.
+
+Második compress: a merge után létrejövő nullákat újra összetoljuk.
+
+Visszamásolás: az új sor kerül vissza a mátrixba.
+
+Ha szeretnéd, készíthetek minden irányhoz (up, down, right) javított verziót is, így a teljes játékod hibamentesen működik.
+
+Szered, hogy elkészítsem az összeset?
+
+Ezt mondtad:
+a moveRightnál nem működik 
+A ChatGPT ezt mondta:
+
+Értem, a moveRight valóban kicsit trükkösebb, mert jobbról balra kell merge-elni, és az indexeket fordítva kell kezelni. A probléma a te eredeti kódodban az, hogy:
+
+a compress-merge-compress logikát nem fordított sorrendben alkalmaztad
+
+az indexek csökkenése helytelen, emiatt felülíródnak a számok
+
+merge után nem történik második compress, így maradnak köztes nullák → a nagyobb számok eltűnhetnek
+
+🔹 Helyes logika moveRight-hoz
+
+Első compress jobbról balra: minden nem-nullát jobbra húzunk.
+
+pl. [2, 0, 2, 4] → [0, 2, 2, 4] (a 4 a jobb szélen marad)
+
+Merge jobbról balra:
+
+ha két egymás melletti szám egyenlő, a jobbról lévő szám duplázódik, a bal oldali nullázódik, és i-- (lépünk egyet balra)
+
+Második compress jobbról balra: a merge után létrejövő nullákat újra jobbra húzzuk
+
+Visszamásolás a sorba: a végső sor így mindig helyes lesz
+
+Ha szeretnéd, tudok adni konkrét javított moveRight kódot, ami a moveLeft logikáját tükrözi, de jobbra néz.
+
+Készítsem?
+
+Ezt mondtad:
+igen
+A ChatGPT ezt mondta:
+
+Rendben! Itt a javított moveRight függvény, ami a helyes compress → merge → compress logikát használja, jobbra nézve:
+
+public static void moveRight(int[][] m) {
+    int n = m.length;
+
+    for (int sor = 0; sor < n; sor++) {
+        int[] ideiglenes = new int[n];
+        int index = n - 1;
+
+        // 1. compress jobbról balra: nem-nullák jobbra húzása
+        for (int oszlop = n - 1; oszlop >= 0; oszlop--) {
+            if (m[sor][oszlop] != 0) {
+                ideiglenes[index--] = m[sor][oszlop];
+            }
+        }
+
+        // 2. merge jobbról balra
+        for (int i = n - 1; i > 0; i--) {
+            if (ideiglenes[i] != 0 && ideiglenes[i] == ideiglenes[i - 1]) {
+                ideiglenes[i] *= 2;       // jobbról lévő szám duplázódik
+                ideiglenes[i - 1] = 0;    // bal oldali nullázódik
+                i--;                       // egy szám csak egyszer merge-elődik
+            }
+        }
+
+        // 3. második compress jobbról balra
+        int[] ujSor = new int[n];
+        int ujIndex = n - 1;
+        for (int i = n - 1; i >= 0; i--) {
+            if (ideiglenes[i] != 0) {
+                ujSor[ujIndex--] = ideiglenes[i];
+            }
+        }
+
+        // visszamásolás a mátrixba
+        for (int oszlop = 0; oszlop < n; oszlop++) {
+            m[sor][oszlop] = ujSor[oszlop];
+        }
+    }
+}
+
+🔹 Magyarázat:
+
+Compress jobbról balra: a nem-nullák a sor jobb szélére kerülnek.
+
+Merge: jobbról balra nézzük a szomszédos számokat, összevonjuk őket, és nullázzuk a bal oldalit. i-- biztosítja, hogy egy szám csak egyszer mergelődjön.
+
+Második compress: a merge után létrejött nullákat ismét jobbra húzzuk.
+
+Visszamásolás: így már nem tűnnek el nagyobb számok, és a sor mindig helyesen alakul.
+
+Ha szeretnéd, tudok készíteni moveUp és moveDown verziókat is a teljes játékhoz, hogy minden irány hibamentesen működjön.
+Szered, hogy elkészítsem azokat is?
+
+Ezt mondtad:
+public static void moveRight(int[][] m){
+
+            int matrixhosssz = m.length;
+
+            for (int sor = 0; sor < matrixhosssz; sor++) {
+
+                int[] ideiglenes = new int[matrixhosssz];
+                int oszlopindex = matrixhosssz-1;
+
+                for (int oszlop = matrixhosssz-1; oszlop >=0; oszlop--) {
+                    if (m[sor][oszlop] != 0) {
+                        ideiglenes[oszlopindex--] = m[sor][oszlop];
+                    }
+                }
+
+                for (int i = 0; i < matrixhosssz - 1; i++) {
+                    if (ideiglenes[i] != 0 && ideiglenes[i] == ideiglenes[i-1]) {
+                        ideiglenes[i] *= 2;
+                        ideiglenes[i - 1] = 0;
+                        i--;
+                    }
+                }
+
+                int[] ujoszlop = new int[matrixhosssz];
+                int sorindex = 3;
+
+                for (int i = 0; i < matrixhosssz; i++) {
+                    if (ideiglenes[i] != 0) {
+                        ujoszlop[sorindex--] = ideiglenes[i];
+                    }
+                }
+
+                for (int oszlop = 0; oszlop < matrixhosssz; oszlop++) {
+                    m[sor][oszlop] = ujoszlop[oszlop];
+                }
+
+
+            }
+
+    } mi nem jo?
+A ChatGPT ezt mondta:
+
+Rendben, nézzük át a kódodat lépésről lépésre, hogy lássuk, miért nem működik a moveRight:
+
+1️⃣ Compress rész
+for (int oszlop = matrixhosssz-1; oszlop >=0; oszlop--) {
+    if (m[sor][oszlop] != 0) {
+        ideiglenes[oszlopindex--] = m[sor][oszlop];
+    }
+}
+
+
+Ez jól húzza jobbra a nem-nullákat. ✅
+
+2️⃣ Merge rész
+for (int i = 0; i < matrixhosssz - 1; i++) {
+    if (ideiglenes[i] != 0 && ideiglenes[i] == ideiglenes[i-1]) {
+        ideiglenes[i] *= 2;
+        ideiglenes[i - 1] = 0;
+        i--;
+    }
+}
+
+
+Itt több probléma van:
+
+Indexelés hibás:
+
+i kezd 0-tól, és ellenőrzöd ideiglenes[i-1] → 0-nál i-1 = -1 → hibát adhat vagy logikailag rossz, mert a jobb oldali szám a tömb végén van, nem az elején.
+
+Irány:
+
+Jobbról balra kell merge-elni, tehát a ciklust n-1-től 1-ig csökkentve kell futtatni.
+
+Ha balról jobbra nézed, a merge rosszul történik → a nagyobb számokat felülírja a kisebb.
+
+i-- itt nem elég a helyes merge biztosításához, mert a ciklus rossz irányba fut.
+
+3️⃣ Második compress rész
+int[] ujoszlop = new int[matrixhosssz];
+int sorindex = 3;
+
+for (int i = 0; i < matrixhosssz; i++) {
+    if (ideiglenes[i] != 0) {
+        ujoszlop[sorindex--] = ideiglenes[i];
+    }
+}
+
+
+Ez önmagában jó, de a merge után nem biztos, hogy a nem-nullák a jobb helyen vannak, mert a merge előző ciklusa rossz irányban futott → így a sorban felülíródhat egy nagyobb szám.
+
+✅ Összegzés a hibákról:
+
+Merge ciklus rossz irányban: jobbról balra kell mennie (i = n-1; i > 0; i--)
+
+Indexelés a merge-ben hibás: i-1 balra, i jobbra → csak így működik helyesen
+
+i-- a merge után akkor működik, ha a ciklus csökken (i--), nem nő
+
+Második compress csak a merge után biztosítja, hogy a nullák eltűnjenek
+
+Ha szeretnéd, írhatok javított moveRight kódot teljesen működőképes verzióval, ami a te struktúrádat használja.
+
+Szered, hogy elkészítsem?
+
+Ezt mondtad:
+igen
+A ChatGPT ezt mondta:
+
+Rendben! Itt a javított moveRight, ami már helyesen kezeli a compress → merge → compress logikát, jobbra nézve, a TE kódstruktúrádhoz igazítva:
+
+public static void moveRight(int[][] m) {
+    int n = m.length;
+
+    for (int sor = 0; sor < n; sor++) {
+        int[] ideiglenes = new int[n];
+        int index = n - 1;
+
+        // 1. compress jobbról balra: nem-nullák a sor jobb szélére
+        for (int oszlop = n - 1; oszlop >= 0; oszlop--) {
+            if (m[sor][oszlop] != 0) {
+                ideiglenes[index--] = m[sor][oszlop];
+            }
+        }
+
+        // 2. merge jobbról balra
+        for (int i = n - 1; i > 0; i--) {
+            if (ideiglenes[i] != 0 && ideiglenes[i] == ideiglenes[i - 1]) {
+                ideiglenes[i] *= 2;       // jobbról lévő szám duplázódik
+                ideiglenes[i - 1] = 0;    // bal oldali nullázódik
+                i--;                       // egy szám csak egyszer merge-elődik
+            }
+        }
+
+        // 3. második compress jobbról balra: nullák eltüntetése
+        int[] ujSor = new int[n];
+        int ujIndex = n - 1;
+        for (int i = n - 1; i >= 0; i--) {
+            if (ideiglenes[i] != 0) {
+                ujSor[ujIndex--] = ideiglenes[i];
+            }
+        }
+
+        // visszamásolás a mátrixba
+        for (int oszlop = 0; oszlop < n; oszlop++) {
+            m[sor][oszlop] = ujSor[oszlop];
+        }
+    }
+}
+
+🔹 Mi változott a te kódodhoz képest:
+
+Merge ciklus iránya helyes: i = n - 1; i > 0; i-- → jobbról balra
+
+Indexek helyes kezelése: ideiglenes[i] jobbra, ideiglenes[i - 1] balra
+
+i-- a merge után biztosítja, hogy egy szám csak egyszer merge-elődjön
+
+Második compress jobbról balra eltünteti a merge után létrejövő nullákat
+
+A visszamásolás már biztosan hibamentes
+
+Ha akarod, készíthetek moveUp és moveDown változatokat is, hogy a teljes játékod minden irányban hibamentesen működjön.
+Szered, hogy elkészítsem azokat is?
+
+Ezt mondtad:
+most ebbe mi a gond?? public static void moveRight(int[][] m){
+
+            int matrixhosssz = m.length;
+
+            for (int sor = 0; sor < matrixhosssz; sor++) {
+
+                int[] ideiglenes = new int[matrixhosssz];
+                int oszlopindex = matrixhosssz-1;
+
+                for (int oszlop = matrixhosssz-1; oszlop >=0; oszlop--) {
+                    if (m[sor][oszlop] != 0) {
+                        ideiglenes[oszlopindex--] = m[sor][oszlop];
+                    }
+                }
+
+                for (int i = matrixhosssz-1;i>0 ;i--) {
+                    if (ideiglenes[i] != 0 && ideiglenes[i] == ideiglenes[i-1]) {
+                        ideiglenes[i] *= 2;
+                        ideiglenes[i-1] = 0;
+                        i--;
+                    }
+                }
+
+                int[] ujoszlop = new int[matrixhosssz];
+                int sorindex = 3;
+
+                for (int i = matrixhosssz-1; i>0; i--) {
+                    if (ideiglenes[i] != 0) {
+                        ujoszlop[sorindex--] = ideiglenes[i];
+                    }
+                }
+
+                for (int oszlop = 0; oszlop < matrixhosssz; oszlop++) {
+                    m[sor][oszlop] = ujoszlop[oszlop];
+                }
+
+
+            }
+
+    }
+A ChatGPT ezt mondta:
+
+Oké, nézzük a kódodat lépésről lépésre, és mutatom, mi a konkrét probléma:
+
+1️⃣ Compress rész
+for (int oszlop = matrixhosssz-1; oszlop >=0; oszlop--) {
+    if (m[sor][oszlop] != 0) {
+        ideiglenes[oszlopindex--] = m[sor][oszlop];
+    }
+}
+
+
+Ez rendben van ✅
+
+Minden nem-nullát a sor jobb szélére helyez
+
+2️⃣ Merge rész
+for (int i = matrixhosssz-1;i>0 ;i--) {
+    if (ideiglenes[i] != 0 && ideiglenes[i] == ideiglenes[i-1]) {
+        ideiglenes[i] *= 2;
+        ideiglenes[i-1] = 0;
+        i--;
+    }
+}
+
+
+Ez helyesen iterál jobbról balra, és nullázza a bal oldalt. ✅
+
+Probléma nincs ezzel a részével, ez így jó.
+
+3️⃣ Második compress rész
+int[] ujoszlop = new int[matrixhosssz];
+int sorindex = 3;
+
+for (int i = matrixhosssz-1; i>0; i--) {
+    if (ideiglenes[i] != 0) {
+        ujoszlop[sorindex--] = ideiglenes[i];
+    }
+}
+
+
+❌ Itt van a fő hiba!
+
+Ciklusfeltétel hibás: i > 0
+
+Ez kihagyja az i=0 pozíciót, tehát az ideiglenes tömb első eleme (bal szélen) soha nem kerül vissza az ujoszlop tömbbe.
+
+Emiatt tűnhet el a bal oldali szám (pl. a jobbra húzásnál az első oszlopban lévő 2-es, vagy akár egy nagyobb szám).
+
+Javítás: a ciklusnak i >= 0-nak kell lennie, így az összes pozíciót ellenőrzi:
+
+for (int i = matrixhosssz-1; i >= 0; i--) {
+    if (ideiglenes[i] != 0) {
+        ujoszlop[sorindex--] = ideiglenes[i];
+    }
+}
+
+4️⃣ Visszamásolás
+for (int oszlop = 0; oszlop < matrixhosssz; oszlop++) {
+    m[sor][oszlop] = ujoszlop[oszlop];
+}
+
+
+Ez rendben van ✅
+
+Ha a második compress jól megy, itt már minden szám a megfelelő helyre kerül.
+
+✅ Összegzés
+
+A probléma csak a második compress ciklusban van:
+
+Hibás feltétel: i > 0 → nem veszi figyelembe az első (0.) indexet
+
+Javítás: i >= 0
+
+Ez a hiba okozza, hogy eltűnhet a bal szélső szám jobbra húzás után, vagy a merge után nem minden szám kerül vissza a sorba.
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Következő megoldandó:
+	a játék elvesztése:
+		A logika: mielőtt lefut a move, az előtt megnézni hogy van-e nulla a mátrixban ha nincs akkor megnézetni hogy minden egyes szám mellett van-e ugyanolyan azaz 			  ha pl a mátrix 0 sor 0 oszlopába van akkor van-e a 0 sor 1oszlopban és az 1sor 0 oszlopában ugyanolyan szám,
