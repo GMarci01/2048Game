@@ -28,7 +28,6 @@ A - A számok eltolása balra
 
 D - A számok eltolása jobbra.
 
-K - Kilépés a játékból.
 
 
 
@@ -66,13 +65,13 @@ A - Move the numbers to the left.
 
 D - Move the numbers to the right.
 
-K - Quit the game.
 
 
 
 
 
 We wish you a happy gameplay!
+
 
 
 
