@@ -1,3 +1,0 @@
-cd Downloads
-cd untitled1
-java -cp "out;libs\jline-3.26.3.jar" com.company.Main
